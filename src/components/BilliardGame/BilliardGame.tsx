@@ -1,54 +1,79 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from "react";
 import "./BilliardGame.css";
-import { getCanvasWidth, getCanvasHeight } from "../../utils/helpers";
-
-interface IBall {
-  x: number;
-  y: number;
-  radius: number;
-}
+import {
+  getContextCanvas,
+  renderBalls,
+  checkBorderCollision,
+  checkBallCollision,
+} from "../../utils/helpers";
+import IBall from "../../types/types";
 
 const BilliardGame = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const balls: Array<IBall> = [
-    { x: 300, y: 200, radius: 10 },
-    { x: 200, y: 400, radius: 12 },
-    { x: 100, y: 300, radius: 15 },
-    { x: 600, y: 100, radius: 16 },
-    { x: 100, y: 100, radius: 18 },
-    { x: 600, y: 300, radius: 20 },
-    { x: 400, y: 300, radius: 23 },
-    { x: 400, y: 100, radius: 25 },
+    { x: 300, y: 200, radius: 10, vx: 0, vy: 0 },
+    { x: 200, y: 400, radius: 12, vx: 0, vy: 0 },
+    { x: 100, y: 300, radius: 15, vx: 0, vy: 0 },
+    { x: 600, y: 100, radius: 16, vx: 0, vy: 0 },
+    { x: 100, y: 100, radius: 18, vx: 0, vy: 0 },
+    { x: 600, y: 300, radius: 20, vx: 0, vy: 0 },
+    { x: 400, y: 300, radius: 23, vx: 0, vy: 0 },
+    { x: 400, y: 100, radius: 25, vx: 0, vy: 0 },
   ];
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
+
     if (canvas && ctx) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = "blue";
-      ctx.shadowColor = "white";
-      ctx.shadowBlur = 5;
-      ctx.lineWidth = 10;
-      ctx.strokeRect(0, 0, canvas.width, canvas.height);
+      getContextCanvas(ctx, canvas);
 
-      ctx.fillStyle = "#ffffff";
+      const moveBallsOnMouseMove = (event: MouseEvent) => {
+        const rect = canvas.getBoundingClientRect();
 
-      balls.forEach((ball) => {
-        ctx.beginPath();
-        ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
-        ctx.fill();
-      });
+        balls.forEach((ball) => {
+          const dx = event.clientX - rect.left - ball.x;
+          const dy = event.clientY - rect.top - ball.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < ball.radius) {
+            const angle = Math.atan2(dy, dx);
+            ball.vx = Math.cos(angle) * 1;
+            ball.vy = Math.sin(angle) * 1;
+          }
+        });
+      };
+
+      const updateCanvas = () => {
+        getContextCanvas(ctx, canvas);
+        renderBalls(balls, ctx);
+
+        balls.forEach((ball) => {
+          checkBorderCollision(ball, canvas);
+
+          balls.forEach((otherBall) => {
+            if (ball !== otherBall) {
+              checkBallCollision(ball, otherBall);
+            }
+          });
+        });
+
+        requestAnimationFrame(updateCanvas);
+      };
+
+      canvas.addEventListener("mousemove", moveBallsOnMouseMove);
+      updateCanvas();
+
+      return () => {
+        canvas.removeEventListener("mousemove", moveBallsOnMouseMove);
+      };
     }
   }, []);
 
   return (
     <div className="block-canvas">
-      <canvas
-        ref={canvasRef}
-        width={getCanvasWidth()}
-        height={getCanvasHeight()}
-      />
+      <canvas ref={canvasRef} width={900} height={500} />
     </div>
   );
 };
