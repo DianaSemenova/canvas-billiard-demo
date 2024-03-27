@@ -27,11 +27,27 @@ const renderBalls = (balls: Array<IBall>, ctx: CanvasRenderingContext2D) => {
 };
 
 const checkBorderCollision = (ball: IBall, canvas: HTMLCanvasElement) => {
-  if (ball.x + ball.radius >= canvas.width || ball.x - ball.radius <= 0) {
-    ball.vx = -ball.vx;
+  const { x, y, radius, vx, vy } = ball;
+  const { width, height } = canvas;
+
+  if (x + radius >= width) {
+    ball.x = width - radius;
+    ball.vx = -vx;
   }
-  if (ball.y + ball.radius >= canvas.height || ball.y - ball.radius <= 0) {
-    ball.vy = -ball.vy;
+
+  if (x - radius <= 0) {
+    ball.x = radius;
+    ball.vx = -vx;
+  }
+
+  if (y + radius >= height) {
+    ball.y = height - radius;
+    ball.vy = -vy;
+  }
+
+  if (y - radius <= 0) {
+    ball.y = radius;
+    ball.vy = -vy;
   }
 };
 
