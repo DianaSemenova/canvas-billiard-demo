@@ -21,8 +21,8 @@ const renderBalls = (balls: Array<IBall>, ctx: CanvasRenderingContext2D) => {
     ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
     ctx.fill();
 
-    ball.x += ball.vx;
-    ball.y += ball.vy;
+    ball.x += ball.vx * 5;
+    ball.y += ball.vy * 5;
   });
 };
 
