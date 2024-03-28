@@ -21,8 +21,8 @@ const renderBalls = (balls: Array<IBall>, ctx: CanvasRenderingContext2D) => {
     ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
     ctx.fill();
 
-    ball.x += ball.vx * 5;
-    ball.y += ball.vy * 5;
+    ball.x += ball.vx * 2;
+    ball.y += ball.vy * 2;
   });
 };
 
@@ -88,8 +88,8 @@ const checkBallCollision = (ballA: IBall, ballB: IBall) => {
 
     ballA.x = ballA.x + (x1Final - x1);
     ballA.y = ballA.y + (y1Final - y1);
-    ballB.x = ballA.x + (x2Final - x2);
-    ballB.y = ballA.y + (y2Final - y2);
+    ballB.x = ballB.x + (x2Final - x2);
+    ballB.y = ballB.y + (y2Final - y2);
 
     ballA.vx = vx1Final * cos - vy1Final * sin;
     ballA.vy = vy1Final * cos + vx1Final * sin;

@@ -3,7 +3,8 @@
 }
 
 .App__title {
-  font-size: 18px;
+  font-size: 25px;
   color: #000061;
   padding: 10px;
+  font-weight: 600;
 }
