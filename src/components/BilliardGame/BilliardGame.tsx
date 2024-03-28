@@ -12,14 +12,14 @@ import IBall from "../../types/types";
 const BilliardGame = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const balls: Array<IBall> = [
-    { id: 1, x: 300, y: 200, radius: 10, vx: 0, vy: 0, color: "blue" },
-    { id: 2, x: 200, y: 400, radius: 12, vx: 0, vy: 0, color: "blue" },
-    { id: 3, x: 100, y: 300, radius: 15, vx: 0, vy: 0, color: "blue" },
-    { id: 4, x: 600, y: 100, radius: 16, vx: 0, vy: 0, color: "blue" },
-    { id: 5, x: 100, y: 100, radius: 18, vx: 0, vy: 0, color: "blue" },
-    { id: 6, x: 600, y: 300, radius: 20, vx: 0, vy: 0, color: "blue" },
-    { id: 7, x: 400, y: 300, radius: 23, vx: 0, vy: 0, color: "blue" },
-    { id: 8, x: 400, y: 100, radius: 25, vx: 0, vy: 0, color: "blue" },
+    { id: 1, x: 300, y: 200, radius: 10, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 2, x: 200, y: 400, radius: 12, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 3, x: 100, y: 300, radius: 15, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 4, x: 600, y: 100, radius: 16, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 5, x: 100, y: 100, radius: 18, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 6, x: 600, y: 300, radius: 20, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 7, x: 400, y: 300, radius: 23, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 8, x: 400, y: 100, radius: 25, vx: 0, vy: 0, color: "#0000ff" },
   ];
 
   useEffect(() => {
