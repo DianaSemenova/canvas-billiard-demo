@@ -12,11 +12,12 @@ const getContextCanvas = (
   ctx.lineWidth = 10;
   ctx.strokeRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = "#ffffff";
+  // ctx.fillStyle = "#ffffff";
 };
 
 const renderBalls = (balls: Array<IBall>, ctx: CanvasRenderingContext2D) => {
   balls.forEach((ball) => {
+    ctx.fillStyle = ball.color;
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
     ctx.fill();
