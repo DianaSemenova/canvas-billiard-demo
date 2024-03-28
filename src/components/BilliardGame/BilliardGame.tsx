@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import "./BilliardGame.css";
 import {
   getContextCanvas,
@@ -7,11 +7,11 @@ import {
   checkBorderCollision,
   checkBallCollision,
 } from "../../utils/helpers";
-import IBall from "../../types/types";
+import { IBall, IProps } from "../../types/types";
 
-const BilliardGame = () => {
+const BilliardGame = ({ menuDisplay, setMenuDisplay }: IProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const balls: Array<IBall> = [
+  const [balls, setBalls] = useState<IBall[]>([
     { id: 1, x: 300, y: 200, radius: 10, vx: 0, vy: 0, color: "#0000ff" },
     { id: 2, x: 200, y: 400, radius: 12, vx: 0, vy: 0, color: "#0000ff" },
     { id: 3, x: 100, y: 300, radius: 15, vx: 0, vy: 0, color: "#0000ff" },
@@ -20,7 +20,34 @@ const BilliardGame = () => {
     { id: 6, x: 600, y: 300, radius: 20, vx: 0, vy: 0, color: "#0000ff" },
     { id: 7, x: 400, y: 300, radius: 23, vx: 0, vy: 0, color: "#0000ff" },
     { id: 8, x: 400, y: 100, radius: 25, vx: 0, vy: 0, color: "#0000ff" },
-  ];
+  ]);
+
+  const handleBallClick = useCallback(
+    (id: number) => {
+      setMenuDisplay({ ...menuDisplay, ballId: id, isShowMenu: true });
+    },
+    [menuDisplay, setMenuDisplay]
+  );
+
+  const updateColorBall = () => {
+    setBalls(
+      balls.map((ball) => {
+        if (
+          ball.id === menuDisplay.ballId &&
+          typeof menuDisplay.ballColor === "string"
+        ) {
+          return { ...ball, color: menuDisplay.ballColor };
+        }
+        return ball;
+      })
+    );
+  };
+
+  useEffect(() => {
+    if (menuDisplay.ballId && menuDisplay.ballColor) {
+      updateColorBall();
+    }
+  }, [menuDisplay.ballId, menuDisplay.ballColor]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -47,7 +74,7 @@ const BilliardGame = () => {
 
       const updateCanvas = () => {
         getContextCanvas(ctx, canvas);
-        renderBalls(balls, ctx);
+        renderBalls(balls, ctx, canvas, handleBallClick);
 
         balls.forEach((ball) => {
           checkBorderCollision(ball, canvas);

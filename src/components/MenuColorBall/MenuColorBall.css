@@ -1,4 +1,16 @@
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .block-menu {
+  animation: appear 0.3s ease-in-out;
   position: absolute;
   top: 0;
   padding: 5px;
@@ -24,6 +36,14 @@
   color: #000061;
   font-weight: 500;
   transition: all 0.2s;
+}
+.block-menu__buttonSvg {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  position: absolute;
+  top: 0;
+  left: 175px;
 }
 
 .block-menu__button:hover {
