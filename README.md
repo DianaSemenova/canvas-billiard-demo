@@ -1,4 +1,4 @@
-# [Демо игры «Биллиард»](https://)
+# [Демо игры «Биллиард»](https://dianasemenova.github.io/canvas-billiard-demo/)
 
 ## Описание проекта
 
@@ -27,3 +27,5 @@
 6. Запуск тестов: `npm run test`
 
 ## Деплой проекта
+
+https://dianasemenova.github.io/canvas-billiard-demo/
