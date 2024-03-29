@@ -1,0 +1,58 @@
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.block-menu {
+  animation: appear 0.2s ease-in-out;
+  position: absolute;
+  top: 0;
+  padding: 5px;
+}
+
+.block-menu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 5px;
+  position: relative;
+}
+.block-menu__title {
+  font-size: 16px;
+  color: #000061;
+  font-weight: 600;
+}
+.block-menu__button {
+  font-size: 14px;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 10px;
+  color: #000061;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.block-menu__buttonSvg {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  position: absolute;
+  top: 0;
+  left: 175px;
+}
+
+.block-menu__button:hover {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05), 0 -5px 10px rgba(0, 0, 0, 0.05);
+  transform: scale(1.02);
+  font-size: 16px;
+}
+.block-menu__button:active {
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05), 0 -5px 10px rgba(0, 0, 0, 0.05);
+  transform: scale(1.02);
+  font-size: 16px;
+}

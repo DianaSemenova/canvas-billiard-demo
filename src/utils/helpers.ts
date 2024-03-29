@@ -1,29 +1,42 @@
-import IBall from "../types/types";
+import { IBall } from "../types/types";
 
-const getContextCanvas = (
+const renderBalls = (
+  balls: Array<IBall>,
   ctx: CanvasRenderingContext2D,
-  canvas: HTMLCanvasElement
+  canvas: HTMLCanvasElement,
+  handleBallClick: (id: number) => void
 ) => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const handleClick = (event: MouseEvent) => {
+    const rect = ctx.canvas.getBoundingClientRect();
+    const mouseX = event.clientX - rect.left;
+    const mouseY = event.clientY - rect.top;
 
-  ctx.strokeStyle = "blue";
-  ctx.shadowColor = "white";
-  ctx.shadowBlur = 5;
-  ctx.lineWidth = 10;
-  ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    balls.forEach((ball) => {
+      if (
+        Math.sqrt(
+          Math.pow(mouseX - ball.x, 2) + Math.pow(mouseY - ball.y, 2)
+        ) <= ball.radius
+      ) {
+        handleBallClick(ball.id);
+      }
+    });
+  };
 
-  ctx.fillStyle = "#ffffff";
-};
+  canvas.addEventListener("click", handleClick);
 
-const renderBalls = (balls: Array<IBall>, ctx: CanvasRenderingContext2D) => {
   balls.forEach((ball) => {
+    ctx.fillStyle = ball.color;
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, 2 * Math.PI);
     ctx.fill();
 
-    ball.x += ball.vx * 2;
-    ball.y += ball.vy * 2;
+    ball.x += ball.vx;
+    ball.y += ball.vy;
   });
+
+  return () => {
+    canvas.removeEventListener("click", handleClick);
+  };
 };
 
 const checkBorderCollision = (ball: IBall, canvas: HTMLCanvasElement) => {
@@ -98,9 +111,4 @@ const checkBallCollision = (ballA: IBall, ballB: IBall) => {
   }
 };
 
-export {
-  getContextCanvas,
-  renderBalls,
-  checkBorderCollision,
-  checkBallCollision,
-};
+export { renderBalls, checkBorderCollision, checkBallCollision };

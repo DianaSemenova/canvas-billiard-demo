@@ -1,26 +1,63 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import "./BilliardGame.css";
 import {
-  getContextCanvas,
   renderBalls,
   checkBorderCollision,
   checkBallCollision,
 } from "../../utils/helpers";
-import IBall from "../../types/types";
+import { IBall, IProps } from "../../types/types";
 
-const BilliardGame = () => {
+const BilliardGame = ({ menuDisplay, setMenuDisplay }: IProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const balls: Array<IBall> = [
-    { x: 300, y: 200, radius: 10, vx: 0, vy: 0 },
-    { x: 200, y: 400, radius: 12, vx: 0, vy: 0 },
-    { x: 100, y: 300, radius: 15, vx: 0, vy: 0 },
-    { x: 600, y: 100, radius: 16, vx: 0, vy: 0 },
-    { x: 100, y: 100, radius: 18, vx: 0, vy: 0 },
-    { x: 600, y: 300, radius: 20, vx: 0, vy: 0 },
-    { x: 400, y: 300, radius: 23, vx: 0, vy: 0 },
-    { x: 400, y: 100, radius: 25, vx: 0, vy: 0 },
-  ];
+  const [balls, setBalls] = useState<IBall[]>([
+    { id: 2, x: 600, y: 300, radius: 16, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 3, x: 100, y: 300, radius: 20, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 4, x: 600, y: 100, radius: 22, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 5, x: 100, y: 100, radius: 25, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 7, x: 400, y: 300, radius: 28, vx: 0, vy: 0, color: "#0000ff" },
+    { id: 8, x: 400, y: 100, radius: 32, vx: 0, vy: 0, color: "#0000ff" },
+  ]);
+
+  const handleBallClick = useCallback(
+    (id: number) => {
+      setMenuDisplay({ ballColor: null, ballId: id, isShowMenu: true });
+    },
+    [menuDisplay, setMenuDisplay]
+  );
+
+  const updateColorBall = useCallback(() => {
+    setBalls(
+      balls.map((ball) => {
+        if (
+          ball.id === menuDisplay.ballId &&
+          typeof menuDisplay.ballColor === "string"
+        ) {
+          return { ...ball, color: menuDisplay.ballColor };
+        }
+        return ball;
+      })
+    );
+  }, [menuDisplay.ballId, menuDisplay.ballColor]);
+
+  useEffect(() => {
+    if (menuDisplay.ballId && menuDisplay.ballColor) {
+      updateColorBall();
+    }
+  }, [updateColorBall]);
+
+  const getContextCanvas = useCallback(
+    (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = "blue";
+      ctx.shadowColor = "white";
+      ctx.shadowBlur = 5;
+      ctx.lineWidth = 10;
+      ctx.strokeRect(0, 0, canvas.width, canvas.height);
+    },
+    [balls]
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -47,7 +84,7 @@ const BilliardGame = () => {
 
       const updateCanvas = () => {
         getContextCanvas(ctx, canvas);
-        renderBalls(balls, ctx);
+        renderBalls(balls, ctx, canvas, handleBallClick);
 
         balls.forEach((ball) => {
           checkBorderCollision(ball, canvas);
@@ -69,7 +106,7 @@ const BilliardGame = () => {
         canvas.removeEventListener("mousemove", moveBallsOnMouseMove);
       };
     }
-  }, []);
+  }, [getContextCanvas]);
 
   return (
     <div className="block-canvas">

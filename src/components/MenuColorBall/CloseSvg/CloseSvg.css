@@ -1,0 +1,10 @@
+.menu-block__svg {
+  transition: all 0.2s;
+}
+
+.menu-block__svg:hover {
+  transform: scale(1.04);
+}
+.menu-block__svg:active {
+  transform: scale(1.04);
+}
