@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/canvas-billiard-demo/static/css/main.faa3ea0e.css",
+    "main.js": "/canvas-billiard-demo/static/js/main.e665c99d.js",
+    "index.html": "/canvas-billiard-demo/index.html",
+    "main.faa3ea0e.css.map": "/canvas-billiard-demo/static/css/main.faa3ea0e.css.map",
+    "main.e665c99d.js.map": "/canvas-billiard-demo/static/js/main.e665c99d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.faa3ea0e.css",
+    "static/js/main.e665c99d.js"
+  ]
+}
