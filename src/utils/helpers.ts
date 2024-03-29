@@ -1,18 +1,5 @@
 import { IBall } from "../types/types";
 
-const getContextCanvas = (
-  ctx: CanvasRenderingContext2D,
-  canvas: HTMLCanvasElement
-) => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  ctx.strokeStyle = "blue";
-  ctx.shadowColor = "white";
-  ctx.shadowBlur = 5;
-  ctx.lineWidth = 10;
-  ctx.strokeRect(0, 0, canvas.width, canvas.height);
-};
-
 const renderBalls = (
   balls: Array<IBall>,
   ctx: CanvasRenderingContext2D,
@@ -124,9 +111,4 @@ const checkBallCollision = (ballA: IBall, ballB: IBall) => {
   }
 };
 
-export {
-  getContextCanvas,
-  renderBalls,
-  checkBorderCollision,
-  checkBallCollision,
-};
+export { renderBalls, checkBorderCollision, checkBallCollision };

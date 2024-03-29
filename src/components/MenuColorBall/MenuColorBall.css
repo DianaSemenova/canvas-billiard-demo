@@ -10,7 +10,7 @@
 }
 
 .block-menu {
-  animation: appear 0.3s ease-in-out;
+  animation: appear 0.2s ease-in-out;
   position: absolute;
   top: 0;
   padding: 5px;

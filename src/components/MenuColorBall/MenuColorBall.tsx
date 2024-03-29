@@ -28,7 +28,10 @@ const MenuColorBall = ({ menuDisplay, setMenuDisplay }: IProps) => {
             {color}
           </button>
         ))}
-        <button className="block-menu__buttonSvg" onClick={clickCloseMenu}>
+        <button
+          className="block-menu__buttonSvg"
+          onClick={() => clickCloseMenu()}
+        >
           <CloseSvg />
         </button>
       </div>

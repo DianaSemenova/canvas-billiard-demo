@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
 import BilliardGame from "./components/BilliardGame/BilliardGame";
 import MenuColorBall from "./components/MenuColorBall/MenuColorBall";
@@ -10,10 +10,6 @@ function App() {
     ballColor: null,
     isShowMenu: false,
   });
-
-  useEffect(() => {
-    console.log(menuDisplay);
-  }, [menuDisplay]);
 
   return (
     <div className="App">
